@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils"
 import type { Task } from "@/types/index"
 import { CalendarDays, Paperclip } from "lucide-react"
 import UserAvatar from "./avatar"
@@ -12,21 +13,24 @@ function TaskList({ tasks }: Props) {
   return (
     <div className="flex flex-col gap-3 pb-2">
       {tasks.map(
-        ({ title, description, id, priority, createdAt, tags, userAvatar }) => {
-          const formattedDate = createdAt
-            ? new Date(createdAt).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })
-            : "Unknown"
+        ({
+          title,
+          description,
+          $id,
+          priority,
+          $createdAt,
+          tags,
+          userAvatar,
+        }) => {
+          const formattedDate = formatDate($createdAt)
 
           return (
             <div
-              key={id}
+              key={$id}
               className="group relative cursor-grab rounded-xl border bg-background p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md active:cursor-grabbing"
             >
               {/* Priority & Options */}
-              <Priority priority={priority} />
+              <Priority priority={priority} id={$id} />
               {/* Content */}
               <h3 className="leading-tight font-semibold text-foreground">
                 {title}
@@ -52,7 +56,7 @@ function TaskList({ tasks }: Props) {
                 </div>
 
                 {/* UserAvatar Avatar */}
-                <UserAvatar userAvatar={userAvatar || ""} id={id} />
+                <UserAvatar userAvatar={userAvatar || ""} id={$id} />
               </div>
             </div>
           )

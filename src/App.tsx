@@ -1,13 +1,28 @@
+import { Toaster } from "@/components/ui/sonner"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import Navbar from "./components/Navbar"
 import Board from "./components/board"
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+})
 
 export function App() {
   return (
     <div className="flex h-screen flex-col">
-      <Navbar />
-      <main>
-        <Board />
-      </main>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools />
+        <Navbar />
+        <main>
+          <Board />
+        </main>
+        <Toaster />
+      </QueryClientProvider>
     </div>
   )
 }

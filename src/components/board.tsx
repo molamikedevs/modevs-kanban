@@ -1,17 +1,23 @@
-"use client"
-
 import TaskList from "@/components/Task-list"
 import { columnConfig } from "@/constants"
-import { fakeTasks } from "@/constants/index"
+import { useTasks } from "@/hooks/useTasks"
+import type { Task } from "@/types"
+import { SpinnerCustom } from "./spinner"
 
 function Board() {
+  const { tasks, isLoading } = useTasks()
+
+  if (isLoading) return <SpinnerCustom />
+
   return (
     <div className="flex h-full w-full flex-col items-center pt-4 md:pt-6">
       <div className="w-full max-w-262.5 snap-x snap-mandatory overflow-x-auto px-4 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {/* Inner track that centers the columns on wide screens */}
         <div className="mx-auto flex h-full w-max justify-start gap-6 md:w-full md:justify-center">
           {columnConfig.map((col) => {
-            const tasks = fakeTasks.filter((t) => t.status === col.status)
+            const tasksArray: Task[] = (
+              (tasks ?? []) as unknown as Task[]
+            ).filter((t) => t.status === col.status)
 
             return (
               <div
@@ -31,13 +37,13 @@ function Board() {
                   <span
                     className={`flex h-6 min-w-6 items-center justify-center rounded-full ${col.bg} ${col.color} px-2 text-xs font-bold`}
                   >
-                    {tasks.length}
+                    {tasksArray?.length}
                   </span>
                 </div>
 
                 {/* Task Container - Scrollbars hidden here as well */}
                 <div className="flex-1 overflow-y-auto pr-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  <TaskList tasks={tasks} />
+                  <TaskList tasks={tasksArray} />
                 </div>
               </div>
             )
