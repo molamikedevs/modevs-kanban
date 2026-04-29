@@ -21,12 +21,14 @@ function AddTask() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-2xl">
+      <DialogContent className="flex max-h-[calc(100dvh-2rem)] w-full max-w-2xl flex-col">
         <DialogHeader>
           <DialogTitle>Create Task</DialogTitle>
         </DialogHeader>
 
-        <TaskForm />
+        <div className="kanban-scrollbar -mr-2 flex-1 overflow-y-auto pr-2">
+          <TaskForm />
+        </div>
       </DialogContent>
     </Dialog>
   )

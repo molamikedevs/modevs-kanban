@@ -19,6 +19,7 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -182,6 +183,21 @@ export default function TaskForm() {
             Separate multiple tags with commas.
           </FieldDescription>
         </Field>
+
+        {/* User Avatar Upload Field */}
+        <div className="grid gap-2">
+          <Label htmlFor="userAvatar">Assignee Avatar (Optional)</Label>
+          <Input
+            id="userAvatar"
+            name="userAvatar"
+            type="file"
+            accept="image/*"
+            className="cursor-pointer file:mr-4 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1 file:text-foreground hover:file:bg-muted/80"
+          />
+          <p className="text-[10px] text-muted-foreground">
+            Upload a small profile picture for the assignee.
+          </p>
+        </div>
       </FieldGroup>
 
       {/* Actions */}

@@ -128,3 +128,28 @@
     @apply font-sans;
   }
 }
+
+/* Updated Kanban Scrollbar for OKLCH Theme */
+.kanban-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.kanban-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Keep it slim */
+}
+
+.kanban-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Keeps the background clean */
+}
+
+.kanban-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 10px;
+}
+
+.kanban-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: var(
+    --muted-foreground
+  ); /* Darkens slightly when the user hovers */
+}

@@ -2,12 +2,12 @@ import TaskList from "@/components/Task-list"
 import { columnConfig } from "@/constants"
 import { useTasks } from "@/hooks/useTasks"
 import type { Task } from "@/types"
-import { SpinnerCustom } from "./spinner"
+import { Spinner } from "./spinner"
 
 function Board() {
   const { tasks, isLoading } = useTasks()
 
-  if (isLoading) return <SpinnerCustom />
+  if (isLoading) return <Spinner />
 
   return (
     <div className="flex h-full w-full flex-col items-center pt-4 md:pt-6">
@@ -41,8 +41,9 @@ function Board() {
                   </span>
                 </div>
 
-                {/* Task Container - Scrollbars hidden here as well */}
-                <div className="flex-1 overflow-y-auto pr-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {/* Task Container */}
+                {/* Task Container with Bottom Fade */}
+                <div className="kanban-scrollbar [linear-gradient(to_bottom,white_90%,transparent_100%)] flex-1 overflow-y-auto pr-2 pb-2">
                   <TaskList tasks={tasksArray} />
                 </div>
               </div>

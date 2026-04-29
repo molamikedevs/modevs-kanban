@@ -11,7 +11,6 @@ export function useDeleteTask() {
       toast.success("Task was successfully deleted", {
         position: "bottom-right",
       })
-      toast.success("")
       queryClient.invalidateQueries({ queryKey: ["tasks"] })
     },
     onError: (err) => toast.error(err.message, { position: "bottom-right" }),

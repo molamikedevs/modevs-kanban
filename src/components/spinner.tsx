@@ -2,7 +2,7 @@ import { LoaderIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+function SpinnerCustom({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <LoaderIcon
       role="status"
@@ -13,11 +13,11 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   )
 }
 
-export function SpinnerCustom() {
+export function Spinner() {
   return (
-    <div className="flex items-center gap-4">
-      <Spinner />
-      <p>Loading tasks...</p>
+    <div className="flex min-h-[50dvh] w-full flex-col items-center justify-center gap-3 text-muted-foreground">
+      <SpinnerCustom className="size-8 text-primary" />
+      <p className="animate-pulse text-sm font-medium">Loading tasks...</p>
     </div>
   )
 }
