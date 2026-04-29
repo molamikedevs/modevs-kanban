@@ -14,7 +14,6 @@ function Navbar() {
           <img src="/logo.svg" alt="logo" className="h-6 w-6" />
           <h1 className="text-xl font-bold tracking-tight">Modevs Kanban</h1>
         </div>
-        {/* Mobile controls can go here if needed */}
       </div>
 
       {/* Search and Filters */}

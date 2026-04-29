@@ -8,7 +8,7 @@ export function useUpdateTask() {
   const { mutate, isPending } = useMutation({
     mutationFn: updateTask,
     onSuccess: () => {
-      toast.success("Task was successfully created", {
+      toast.success("Task was successfully updated", {
         position: "bottom-right",
       })
       queryClient.invalidateQueries({ queryKey: ["tasks"] })

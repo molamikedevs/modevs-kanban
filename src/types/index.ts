@@ -8,7 +8,7 @@ export interface Task {
   status: Status
   position: number
   $createdAt: string
-  priority: PriorityType
+  priority?: PriorityType
   tags?: string[]
   userAvatar?: string
 }

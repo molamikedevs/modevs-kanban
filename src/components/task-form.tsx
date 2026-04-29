@@ -1,211 +1,66 @@
-"use client"
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm, useWatch } from "react-hook-form"
-import * as z from "zod"
+import type { Task } from "@/types/index"
 
 import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { FieldGroup } from "@/components/ui/field"
 
-import { taskSchema } from "@/validation"
+import { useTaskForm } from "@/hooks/use-task-form"
+import { useTaskSubmit } from "@/hooks/use-task-submit"
 
-export default function TaskForm() {
-  const form = useForm<z.infer<typeof taskSchema>>({
-    resolver: zodResolver(taskSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      status: "TODO",
-      priority: "MEDIUM",
-      tags: "",
-    },
+import { AvatarField, TagsField } from "./optional-fields"
+import { StatusPriorityFields } from "./status-priority-field"
+import { TitleDescriptionFields } from "./title-description-field"
+
+interface TaskFormProps {
+  taskToEdit?: Task | null
+  onSuccessCallback?: () => void
+}
+
+export default function TaskForm({
+  taskToEdit,
+  onSuccessCallback,
+}: TaskFormProps) {
+  const { form, descriptionLength } = useTaskForm(taskToEdit)
+  const { onSubmit, isPending } = useTaskSubmit({
+    taskToEdit,
+    onSuccess: onSuccessCallback,
   })
-
-  const description = useWatch({
-    control: form.control,
-    name: "description",
-  })
-
-  const onSubmit = (data: z.infer<typeof taskSchema>) => {
-    // Parse the comma-separated string into an array of trimmed tags
-    const formattedData = {
-      ...data,
-      tags: data.tags
-        ? data.tags
-            .split(",")
-            .map((tag) => tag.trim())
-            .filter(Boolean)
-        : [],
-    }
-
-    console.log("Submitting to Appwrite:", formattedData)
-    // Here you will eventually add your Appwrite document creation logic
-  }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <FieldGroup>
-        {/* Title */}
-        <Field>
-          <FieldLabel>Title</FieldLabel>
-          <Input
-            {...form.register("title")}
-            placeholder="e.g. Setup Appwrite Auth"
-          />
-          <FieldError
-            errors={
-              form.formState.errors.title
-                ? [{ message: form.formState.errors.title.message }]
-                : []
-            }
-          />
-        </Field>
+        <TitleDescriptionFields
+          control={form.control}
+          errors={form.formState.errors}
+          register={form.register}
+          descriptionLength={descriptionLength}
+        />
 
-        {/* Description */}
-        <Field>
-          <FieldLabel>Description</FieldLabel>
-          <InputGroup>
-            <InputGroupTextarea
-              {...form.register("description")}
-              rows={4}
-              placeholder="Provide clear details about this task..."
-              className="resize-none"
-            />
-            <InputGroupAddon align="block-end">
-              <InputGroupText className="text-xs">
-                {description?.length || 0}/100
-              </InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
-          <FieldError
-            errors={
-              form.formState.errors.description
-                ? [{ message: form.formState.errors.description.message }]
-                : []
-            }
-          />
-        </Field>
+        <StatusPriorityFields
+          control={form.control}
+          errors={form.formState.errors}
+        />
 
-        {/* Status and Priority (Side-by-side) */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* Status */}
-          <Field>
-            <FieldLabel>Status</FieldLabel>
-            <Controller
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="TODO">To Do</SelectItem>
-                    <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                    <SelectItem value="DONE">Done</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            <FieldError
-              errors={
-                form.formState.errors.status
-                  ? [{ message: form.formState.errors.status.message }]
-                  : []
-              }
-            />
-          </Field>
+        <TagsField register={form.register} />
 
-          {/* Priority */}
-          <Field>
-            <FieldLabel>Priority</FieldLabel>
-            <Controller
-              control={form.control}
-              name="priority"
-              render={({ field }) => (
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select priority" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="LOW">Low</SelectItem>
-                    <SelectItem value="MEDIUM">Medium</SelectItem>
-                    <SelectItem value="HIGH">High</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            <FieldError
-              errors={
-                form.formState.errors.priority
-                  ? [{ message: form.formState.errors.priority.message }]
-                  : []
-              }
-            />
-          </Field>
-        </div>
-
-        {/* Tags */}
-        <Field>
-          <FieldLabel>Tags (Optional)</FieldLabel>
-          <Input
-            {...form.register("tags")}
-            placeholder="Frontend, Bug, High Priority"
-          />
-          <FieldDescription className="text-xs text-muted-foreground">
-            Separate multiple tags with commas.
-          </FieldDescription>
-        </Field>
-
-        {/* User Avatar Upload Field */}
-        <div className="grid gap-2">
-          <Label htmlFor="userAvatar">Assignee Avatar (Optional)</Label>
-          <Input
-            id="userAvatar"
-            name="userAvatar"
-            type="file"
-            accept="image/*"
-            className="cursor-pointer file:mr-4 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1 file:text-foreground hover:file:bg-muted/80"
-          />
-          <p className="text-[10px] text-muted-foreground">
-            Upload a small profile picture for the assignee.
-          </p>
-        </div>
+        <AvatarField
+          register={form.register}
+          setValue={form.setValue}
+          currentAvatar={taskToEdit?.userAvatar}
+        />
       </FieldGroup>
 
-      {/* Actions */}
       <div className="flex justify-end gap-3 border-t pt-4">
-        <Button type="button" variant="ghost">
+        <Button
+          className="cursor-pointer"
+          type="button"
+          variant="ghost"
+          onClick={() => onSuccessCallback?.()}
+        >
           Cancel
         </Button>
-        <Button type="submit">Create Task</Button>
+        <Button disabled={isPending} className="cursor-pointer" type="submit">
+          {isPending ? "Saving..." : taskToEdit ? "Update Task" : "Create Task"}
+        </Button>
       </div>
     </form>
   )

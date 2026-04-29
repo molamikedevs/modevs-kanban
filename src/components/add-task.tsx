@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -9,11 +7,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
+import { useState } from "react"
 import TaskForm from "./task-form"
 
 function AddTask() {
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
+
   return (
-    <Dialog>
+    <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
       <DialogTrigger asChild>
         <Button className="flex items-center gap-2">
           <Plus size={16} />
@@ -27,7 +28,7 @@ function AddTask() {
         </DialogHeader>
 
         <div className="kanban-scrollbar -mr-2 flex-1 overflow-y-auto pr-2">
-          <TaskForm />
+          <TaskForm onSuccessCallback={() => setIsCreateOpen(false)} />
         </div>
       </DialogContent>
     </Dialog>

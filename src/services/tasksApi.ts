@@ -44,7 +44,7 @@ export async function getTasks() {
     const response = await tablesDB.listRows({
       databaseId,
       tableId,
-      queries: [Query.limit(20)],
+      queries: [Query.limit(20), Query.orderDesc("position")],
     })
 
     return response.rows
