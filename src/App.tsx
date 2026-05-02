@@ -1,8 +1,8 @@
 import { Toaster } from "@/components/ui/sonner"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import Navbar from "./components/Navbar"
-import Board from "./components/board"
+import Navbar from "./components/common/Navbar"
+import Board from "./components/tasks/board"
 
 const queryClient = new QueryClient({
   defaultOptions: {

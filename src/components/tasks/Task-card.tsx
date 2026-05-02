@@ -9,7 +9,7 @@ interface Props {
   tasks: Task[]
 }
 
-function TaskList({ tasks }: Props) {
+function TaskCard({ tasks }: Props) {
   return (
     <div className="flex flex-col gap-3 pb-2">
       {tasks.map((task) => {
@@ -57,4 +57,4 @@ function TaskList({ tasks }: Props) {
   )
 }
 
-export default TaskList
+export default TaskCard

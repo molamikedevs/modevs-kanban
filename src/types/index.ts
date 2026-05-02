@@ -1,11 +1,11 @@
-export type Status = "TODO" | "IN_PROGRESS" | "DONE"
+export type TaskStatus = "TODO" | "IN_PROGRESS" | "DONE"
 export type PriorityType = "LOW" | "MEDIUM" | "HIGH"
 
 export interface Task {
   $id: string
   title: string
   description: string
-  status: Status
+  status: TaskStatus
   position: number
   $createdAt: string
   priority?: PriorityType
