@@ -1,21 +1,50 @@
-# React + TypeScript + Vite + shadcn/ui
+# 📋 Modevs Kanban
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+![Modevs Kanban Banner](https://i.imgur.com/p5qx8l2.png)
 
-## Adding components
+> An enterprise-grade Kanban board featuring complex drag-and-drop state management and real-time database synchronization.
 
-To add components to your app, run the following command:
+## ✨ Features
 
+- **Advanced Task Management**
+  - Create, edit, and delete tasks with a seamless modal interface
+  - Categorize workflows (To Do, In Progress, Done)
+  - Apply dynamic tags and priority levels (High, Medium, Low)
+- **High-Performance Drag & Drop**
+  - Smooth, tactile drag-and-drop card reordering
+  - **Fractional Indexing:** Optimized database math for `position` updates, ensuring zero performance bottlenecks during card movement
+- **Enterprise User Experience**
+  - Fully responsive, dark-mode native UI built with shadcn/ui
+  - Optimistic UI updates (instant visual feedback before server confirmation)
+  - Advanced search and priority filtering
+- **Data Architecture**
+  - Centralized server state management with TanStack Query
+  - Strict schema validation using Zod and React Hook Form
+  - NoSQL backend integration via Appwrite
+
+## 🛠 Tech Stack
+
+| Category        | Technologies                                      |
+|-----------------|---------------------------------------------------|
+| Frontend        | React (Vite), Tailwind CSS, shadcn/ui             |
+| State & Forms   | TanStack Query, React Hook Form, Zod              |
+| Backend         | Appwrite (Databases)                              |
+| Deployment      | Vercel                                            |
+
+## 🚀 Live Demo
+
+Explore the workspace: [Modevs Kanban](https://modevs-kanban.vercel.app/)
+
+## 📸 App Preview
+
+<div align="center">
+  <img src="https://i.imgur.com/p5qx8l2.png" width="45%" alt="Kanban Board View">
+  <img src="https://i.imgur.com/7SUhu4j.png" width="45%" alt="Task Creation Modal"> 
+</div>
+
+## 🛠️ Installation
+
+1. Clone the repository
 ```bash
-npx shadcn@latest add button
-```
-
-This will place the ui components in the `src/components` directory.
-
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button"
-```
+git clone [https://github.com/molamikedevs/modevs-kanban.git](https://github.com/molamikedevs/modevs-kanban.git)
+cd modevs-kanban
