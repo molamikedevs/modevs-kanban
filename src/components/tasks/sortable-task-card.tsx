@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils"
 import type { Task } from "@/types"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { CalendarDays, Paperclip } from "lucide-react"
+import { CalendarDays, GripVertical, Paperclip } from "lucide-react"
 
 interface Props {
   task: Task
@@ -21,6 +21,7 @@ function SortableTaskCard({ task, isGhost }: Props) {
     attributes,
     listeners,
     setNodeRef,
+    setActivatorNodeRef,
     transform,
     transition,
     isDragging: isSortableDragging,
@@ -35,10 +36,20 @@ function SortableTaskCard({ task, isGhost }: Props) {
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className={`group relative cursor-grab rounded-xl border bg-background p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md active:cursor-grabbing ${isSortableDragging ? "scale-95 opacity-40 shadow-lg ring-2 ring-primary/30" : ""} ${isGhost ? "opacity-0" : ""}`}
+      className={`group relative rounded-xl border bg-background p-4 shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md ${isSortableDragging ? "scale-95 opacity-40 shadow-lg ring-2 ring-primary/30" : ""} ${isGhost ? "opacity-0" : ""}`}
     >
+      {/* Drag handle — listeners ONLY here */}
+      <button
+        ref={setActivatorNodeRef}
+        {...attributes}
+        {...listeners}
+        type="button"
+        aria-label="Drag task"
+        className="absolute top-2 right-2 flex h-8 w-8 cursor-grab touch-none items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100"
+      >
+        <GripVertical className="h-4 w-4" />
+      </button>
+
       <Priority task={task} />
       <h3 className="leading-tight font-semibold text-foreground">{title}</h3>
       <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">

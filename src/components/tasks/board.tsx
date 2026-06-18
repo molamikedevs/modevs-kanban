@@ -32,7 +32,7 @@ function Board() {
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
     useSensor(TouchSensor, {
-      activationConstraint: { delay: 200, tolerance: 8 },
+      activationConstraint: { delay: 150, tolerance: 5 },
     })
   )
 
@@ -53,7 +53,11 @@ function Board() {
       onDragCancel={handleDragCancel}
     >
       <div className="flex h-full w-full flex-col items-center pt-4 md:pt-6">
-        <div className="w-full max-w-262.5 snap-x snap-mandatory overflow-x-auto px-4 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          className={`w-full max-w-262.5 overflow-x-auto px-4 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+            activeTask ? "" : "snap-x snap-mandatory"
+          }`}
+        >
           <div className="mx-auto flex h-full w-max justify-start gap-6 md:w-full md:justify-center">
             {columnConfig.map((col) => {
               const columnTasks = tasks.filter(
