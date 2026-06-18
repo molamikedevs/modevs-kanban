@@ -3,6 +3,7 @@ import KanbanPage from "@/components/tasks/kanban-page"
 import { Toaster } from "@/components/ui/sonner"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import Footer from "./components/common/footer"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,7 @@ export function App() {
         <main>
           <KanbanPage />
         </main>
+        <Footer />
         <Toaster />
       </QueryClientProvider>
     </div>
