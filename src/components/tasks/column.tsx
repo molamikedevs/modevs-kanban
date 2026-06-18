@@ -42,7 +42,7 @@ function Column({ col, tasks, activeId }: Props) {
       </div>
 
       {/* Sortable Task List */}
-      <div className="kanban-scrollbar flex-1 touch-pan-y overflow-y-auto pr-2 pb-2">
+      <div className="kanban-scrollbar flex-1 overflow-y-auto pr-2 pb-2">
         <SortableContext
           items={tasks.map((t) => t.$id)}
           strategy={verticalListSortingStrategy}

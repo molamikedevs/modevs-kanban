@@ -69,6 +69,22 @@ export function useKanban() {
     )
   }
 
+  /**
+   * Move a task to a new column from outside the drag flow
+   * (mobile menu click). Places it at the end of the target column.
+   */
+  function updateTaskStatus(taskId: string, nextStatus: TaskStatus) {
+    const task = tasks.find((t) => t.$id === taskId)
+    if (!task || task.status === nextStatus) return
+
+    const columnTasks = tasks.filter((t) => t.status === nextStatus)
+    const newPosition = columnTasks.length
+      ? Math.max(...columnTasks.map((t) => t.position)) + 1
+      : 1
+
+    moveTask({ id: taskId, status: nextStatus, position: newPosition })
+  }
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     setActiveTask(null)
@@ -112,5 +128,6 @@ export function useKanban() {
     handleDragOver,
     handleDragEnd,
     handleDragCancel,
+    updateTaskStatus,
   }
 }
